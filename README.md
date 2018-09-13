@@ -1,7 +1,7 @@
 # VSCode Icons Manager
 > Currently Work in Progress
 
-This project has born from the necessity of a desktop app that helps you manage **[@dhanishgajjar][dhanish]** custom [vscode icons][icons]
+This project was born from the necessity of a desktop app that helps you manage **[@dhanishgajjar][dhanish]** custom [vscode icons][icons]
 
 <p align="center">
     <img src="https://user-images.githubusercontent.com/16429579/45490907-9fc88300-b768-11e8-9a4c-96c2e6576c83.png" alt="cover">
@@ -19,7 +19,7 @@ As we don't actually have a build phase you need to run this app via electron.
 
 # Known issues
 - After download you need to `cmd + click` on the dock icon to update it.
-- If the icon has been downloaded in the past the loading screen and the notification doesn't appear on screen. (NOTE: This has been temporally fixed by deleting it after download.)
+- If the icon has been downloaded in the past the loading screen and the notification doesn't appear on the screen. (NOTE: This has been temporally fixed by deleting it after download.)
 
 # Contribute
 Contributors are always welcome! To ensure that your PR will be merged please follow the code-style
