@@ -54,13 +54,19 @@ function makeWindow(path, windowName = 'main')
 
 
 // Renderer files folder
-let renderer = 'app/index.html';
+let renderer = 'render/index.html';
 
 
 
 // Once app is ready
 app.once('ready', () => {
 	w = makeWindow(renderer);
+
+	if ( process.platform != 'darwin' )
+	{
+		dialog.showErrorBox('Unsupported platform!', 'We are sorry but right now that application runs only on macOS systems.');
+		app.quit();
+	}
 
 	// Check for vscode installation
 	if (!settings.has('icon-folder'))  settings.set('icon-folder', '/Applications/Visual\ Studio\ Code.app/Contents/Resources/');
@@ -125,17 +131,17 @@ ipcMain.on('selected', (ev, source) => {
 	presentLoading(ev.sender);
 
 	// If the icon exists prevent download
-	if ( fs.existsSync( path.join(__dirname, 'icons', filename) ) === true  )
+	if ( fs.existsSync( path.join(__dirname, '..', 'icons', filename) ) === true  )
 	{
-		logger.log('Icon exists!')
-		return setIcon(path.join(__dirname, 'icons', filename), ev.sender);
+		logger.log('Icon exists!');
+		return setIcon(path.join(__dirname, '..', 'icons', filename), ev.sender);
 	}
 
 	logger.log('Starting download');
 		
 	// Download the icon from git repo
 	download(BrowserWindow.getFocusedWindow(), source, {
-		directory: path.join(__dirname, 'icons')
+		directory: path.join(__dirname, '..', 'icons')
 	}).then(dl => {
 		let p = dl.getSavePath();
 		setIcon(p, ev.sender);
