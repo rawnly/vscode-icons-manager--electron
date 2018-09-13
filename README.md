@@ -70,7 +70,9 @@ Contributors are always welcome! To ensure that your PR will be merged please fo
 <br />
 
 <p align="center">
-  Follow me on social media <br /> <a href="https://twitter.com/rawnlydev"> Twitter </a> • <a href="https://instagram.com/fede.vitale"> Instagram </a>
+  **Follow Me**
+  <br /> 
+  <a href="https://twitter.com/rawnlydev"> Twitter </a> | <a href="https://instagram.com/fede.vitale"> Instagram </a>
 </p>
 
 
