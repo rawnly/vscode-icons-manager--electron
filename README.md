@@ -11,6 +11,8 @@ This project has born from the necessity of a desktop app that helps you manage 
 # Run
 As we don't actually have a build phase you need to run this app via electron.
 
+#### ⚠️ This app currently works only on macOS
+
 - Clone this repo 
 - Install all dependencies via "npm" or "yarn"
 - Run via "npm start" or "yarn start"
