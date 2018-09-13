@@ -53,7 +53,8 @@ function makeWindow(path, windowName = 'main')
 }
 
 
-let renderer = 'appvue/index.html';
+// Renderer files folder
+let renderer = 'app/index.html';
 
 
 

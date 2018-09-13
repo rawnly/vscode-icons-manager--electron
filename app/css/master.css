@@ -68,6 +68,7 @@ body {
 
 .flex-container {
     background: white;
+    padding-top: 0;
 
     display: flex;
     justify-content: space-evenly;
@@ -76,25 +77,77 @@ body {
     flex-direction: row;
 }
 
-.flex-container img {
+.flex-container .item {
+    width: 150px;
+    height: 150px;
+
     max-width: 150px;
     max-height: 150px;
 
-    margin: 15px;
+    margin: 45px 25px;
     padding: 0;
 }
 
-.flex-container img:active {
+.flex-container .item img {
+    width: 150px;
+    height: 150px;
+
+    max-width: 150px;
+    max-height: 150px;
+
+    margin: 0;
+    padding: 0;
+
+    display: block;
+}
+
+.flex-container .item p {
+    margin: 0 auto;
+    margin-top: 10px;
+    font-weight: bold;
+    display: block;
+    text-align: center;
+}
+
+.flex-container .item:active img {
     transform: scale(.95);
 }
 
-.flex-container img:hover {
+.flex-container .item:hover img {
     transform: scale(1.05);
     opacity: .8;
     cursor: pointer;
 }
 
+.search-container {
+    position: relative;
+    padding: 25px;
+    width: 100vw;
 
+    padding: 45px 0 15px 0;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.search-container input {
+    width: 80vw;
+    max-width: 350px;
+
+    margin: 0 auto;
+    padding: 10px;
+    font-size: 1em;
+    border-radius: 20px;
+    border: 2px solid #ddd;
+
+    transition: all 200ms ease-in-out;
+}
+
+.search-container input:focus {
+    border-color: #aaa;
+    border-radius: 15px;
+}
 
 /* TODO: Implement hiddenInset titlebar */
 #electron-titlebar {
