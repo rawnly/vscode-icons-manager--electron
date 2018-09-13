@@ -70,9 +70,7 @@ Contributors are always welcome! To ensure that your PR will be merged please fo
 <br />
 
 <p align="center">
-  <a href="https://paypal.me/rawnly/1">
-      <img src="https://img.shields.io/badge/donate-paypal-blue.svg?longCache=true&style=for-the-badge&colorA=34495e&colorB=1abc9c" alt="Donate"/>
-    </a>
+  Follow me on social media <br /> <a href="https://twitter.com/rawnlydev"> Twitter </a> • <a href="https://instagram.com/fede.vitale"> Instagram </a>
 </p>
 
 
