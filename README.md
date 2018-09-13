@@ -1,5 +1,6 @@
 # VSCode Icons - Desktop App
 > Currently Work in Progress
+
 This project has born from the necessity of a desktop app that helps you manage **[@dhanishgajjar][dhanish]** custom [vscode icons][icons]
 
 <p align="center">
