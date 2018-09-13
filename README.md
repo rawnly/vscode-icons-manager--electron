@@ -30,7 +30,7 @@ Contributors are always welcome! To ensure that your PR will be merged please fo
 
 - [ ] App icon
 - [ ] Implement hiddenInset titlebar style
-- [ ] Impelment tests
+- [ ] Implement tests
 
 <br />
 <hr />
