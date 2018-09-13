@@ -1,4 +1,4 @@
-# VSCode Icons - Desktop App
+# VSCode Icons Manager
 > Currently Work in Progress
 
 This project has born from the necessity of a desktop app that helps you manage **[@dhanishgajjar][dhanish]** custom [vscode icons][icons]
@@ -22,7 +22,10 @@ As we don't actually have a build phase you need to run this app via electron.
 # Contribute
 Contributors are always welcome! To ensure that your PR will be merged please follow the code-style
 
-## TODO before release 
+## TODO before release
+<br />
+<br />
+
 - [ ] App icon
 - [ ] Implement hiddenInset titlebar style
 - [ ] Impelment tests
@@ -60,6 +63,9 @@ Contributors are always welcome! To ensure that your PR will be merged please fo
 
 - [vscode-icons][icons] is a project by **[@dhanishgajjar][dhanish]**
 
+<br />
+<br />
+<br />
 
 <p align="center">
   <a href="https://paypal.me/rawnly/1">
