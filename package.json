@@ -1,10 +1,30 @@
 {
-  "name": "vscode-icons-desktop",
+  "name": "VSCodeIconsManager",
   "version": "1.0.0",
   "main": "app/app.js",
   "license": "MIT",
+  "author": "Federico Vitale",
+  "build": {
+    "productName": "VSCode Icons Manager",
+    "icon": "assets/icon/512x512.png",
+    "copyright": "Copyright © 2018 ${author}",
+    "appId": "com.federicovitale.${name}",
+    "dmg": {
+      "title": "Install VSCode Icon Manager"
+    },
+    "mac": {
+      "category": "public.app-category.utilities",
+      "target": "dmg"
+    }
+  }, 
+  "scripts": {
+    "clean": "rm -rf dist",
+    "start": "electron .",
+    "pack": "electron-builder --dir",
+    "dist": "electron-builder",
+    "build": "npm run clean && npm run dist"
+  },
   "dependencies": {
-    "electron": "^2.0.9",
     "electron-dl": "^1.12.0",
     "electron-store": "^2.0.0",
     "electron-timber": "^0.5.1",
@@ -12,10 +32,9 @@
     "got": "^9.2.1",
     "touch": "^3.1.0"
   },
-  "scripts": {
-    "start": "electron ."
-  },
   "devDependencies": {
+    "electron": "^2.0.9",
+    "electron-builder": "^20.28.4",
     "eslint": "^5.5.0"
   }
 }
