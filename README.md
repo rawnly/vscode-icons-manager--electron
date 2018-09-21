@@ -28,8 +28,8 @@ Contributors are always welcome! To ensure that your PR will be merged please fo
 <br />
 <br />
 
-- [ ] App icon
-- [ ] Implement hiddenInset titlebar style
+- [x] App icon
+- [x] Implement hiddenInset titlebar style
 - [ ] Implement tests
 
 <br />
@@ -53,7 +53,7 @@ Contributors are always welcome! To ensure that your PR will be merged please fo
 <hr />
 <br />
 
-- [ ] Implement build
+- [x] Implement build
 - [ ] Automatization of icon update... Right now after the app changes the file you need to "cmd+click" on the dock icon or restart to update the icon in the dock.
 
 <br />
