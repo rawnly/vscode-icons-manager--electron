@@ -10,7 +10,7 @@ This project was born from the necessity of a desktop app that helps you manage 
 
 # Run
 #### ⚠️ This app currently works only on macOS
-Download the latest release [here](https://github.com/vscode-icons-desktop/releases/latest).
+Download the latest release [here](https://github.com/Rawnly/vscode-icons-desktop/releases/latest).
 
 
 # Known issues
