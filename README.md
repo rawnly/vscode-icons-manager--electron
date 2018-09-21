@@ -2,7 +2,7 @@
 > This app let's you manage vscode icons by [@dhanishgajjar][dhanish] easy with ease.
 
 <p align="center">
-    <img src="https://user-images.githubusercontent.com/16429579/45490907-9fc88300-b768-11e8-9a4c-96c2e6576c83.png" alt="cover">
+    <img src="https://user-images.githubusercontent.com/16429579/45881568-cc554e00-bdab-11e8-91bb-ef597e8cadbc.png" alt="cover">
 </p>
 
 
