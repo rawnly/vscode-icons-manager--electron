@@ -50,7 +50,7 @@ How can i contribute?
 - [ ] Add local icons
 - [ ] Add settings
 - [ ] Add an "history panel" or something similar
-- [ ] Help menu items that refers to [vscode-icons repo][icons] and this repo
+- [x] ~Help menu items that refers to [vscode-icons repo][icons] and this repo~
 - [ ] Custom "About" panel with credits
 
 <br />
