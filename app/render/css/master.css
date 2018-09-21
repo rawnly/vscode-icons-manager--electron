@@ -13,6 +13,8 @@ body {
 
     margin: 0;
     padding: 0;
+
+    background: white;
 }
 
 
@@ -156,10 +158,9 @@ body {
     top: 0;
     left: 0;
     padding: 20px;
-    background: white;
     z-index: 9999;
     
     -webkit-user-select: none;
-
-    box-shadow: 0 4px 15px rgba(0, 0, 0, .05);
+    -ms-overflow-style: scrollbar;
+    -webkit-app-region:drag;
 }

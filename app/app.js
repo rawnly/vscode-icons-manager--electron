@@ -8,6 +8,7 @@
 const path = require('path');
 const fs = require('fs');
 
+const { join } = path;
 const { app, BrowserWindow, ipcMain, dialog } = require('electron');
 const { download } = require('electron-dl');
 
@@ -20,6 +21,8 @@ const logger = require('electron-timber');
 
 let w;
 
+
+app.setName('VSCode Icons Manager');
 
 /**
  * 
@@ -36,18 +39,28 @@ function makeWindow(path, windowName = 'main')
 		width: 800,
 		height: 800,
 		center: true,
+		show: false,
 		resizable: false,
 		fullscreenable: false,
 		minimizable: true,
 		maximizable: false,
-		title: windowName
+		title: windowName,
+		titleBarStyle: 'hiddenInset',
+		icon: join(__dirname, '..', 'assets', 'icon', '64x64.png')
+	});
+
+	win.once('ready-to-show', () => {
+		win.show();
 	});
 
 	win.loadURL('file://' + __dirname + '/' + path);
 
-	win.on('close', () => {
+	win.on('closed', () => {
 		win = null;
 	});
+
+	require('./libs/Menu');
+	
 
 	return win;
 }
