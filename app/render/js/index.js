@@ -25,6 +25,8 @@ const $vm = new Vue({
         }
     },
     mounted: async function() {
+        ipc.send('update-theme');
+
         this.presentLoading('Loading awesome icons...');
 
         try {
@@ -115,3 +117,23 @@ ipc.on('dismiss-loading', $vm.dismissLoading);
 ipc.on('present-loading', () => {
     $vm.presentLoading('Loading...');
 });
+
+
+ipc.on('theme changed', (e, data) => {
+    console.log(e, data)
+
+    if ( data.dark == true )
+    {
+        document.querySelectorAll('.theme-light').forEach(el => {
+            el.classList.toggle('theme-light')
+            el.classList.toggle('theme-dark')
+        })
+
+        return;
+    }
+
+    document.querySelectorAll('.theme-dark').forEach(el => {
+        el.classList.toggle('theme-light')
+        el.classList.toggle('theme-dark')
+    })
+})

@@ -6,6 +6,8 @@ const Store = require('electron-store');
 const settings = new Store();
 
 const logger = require('electron-timber');
+const electron = require('electron');
+
 
 function presentLoading(window) {
 	if (window)

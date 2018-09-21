@@ -9,7 +9,7 @@ const path = require('path');
 const fs = require('fs');
 
 const { join } = path;
-const { app, BrowserWindow, ipcMain, dialog } = require('electron');
+const { app, BrowserWindow, ipcMain, dialog, systemPreferences } = require('electron');
 const { download } = require('electron-dl');
 
 const Storage = require('electron-store');
@@ -49,18 +49,13 @@ function makeWindow(path, windowName = 'main')
 		icon: join(__dirname, '..', 'assets', 'icon', '64x64.png')
 	});
 
-	win.once('ready-to-show', () => {
-		win.show();
-	});
-
 	win.loadURL('file://' + __dirname + '/' + path);
 
-	win.on('closed', () => {
-		win = null;
-	});
+	win.once('ready-to-show', () => win.show());
+	win.on('closed', () => win = null);
 
-	require('./libs/Menu');
-	
+
+	require('./libs/Menu');	
 
 	return win;
 }
@@ -69,16 +64,22 @@ function makeWindow(path, windowName = 'main')
 // Renderer files folder
 let renderer = 'render/index.html';
 
+const updateTheme = () =>  {
+	logger.log('Changing theme to', systemPreferences.isDarkMode() ? 'dark' : 'bright');
+	if ( w ) w.webContents.send('theme changed', { dark: systemPreferences.isDarkMode() });
+};
 
+systemPreferences.subscribeNotification('AppleInterfaceThemeChangedNotification', updateTheme);
 
 // Once app is ready
 app.once('ready', () => {
 	w = makeWindow(renderer);
+	updateTheme();
 
 	if ( process.platform != 'darwin' )
 	{
 		dialog.showErrorBox('Unsupported platform!', 'We are sorry but right now that application runs only on macOS systems.');
-		app.quit();
+		return app.quit();
 	}
 
 	// Check for vscode installation
@@ -120,16 +121,16 @@ app.once('ready', () => {
 // If all windows are closed then close the app if not on macOS
 app.on('window-all-closed', () => {
 	w = null;
-
-	if (process.platform !== 'darwin' ) {
-		app.quit();
-	}
+	if (process.platform !== 'darwin' ) return app.quit();
 });
 
 // on macOS create a new window on app click (only if no windows are avaialble)
 app.on('activate', () => {
-	if ( !w || w == null || BrowserWindow.getAllWindows().length === 0) {
-		w = makeWindow(renderer);
+	if ( process.platform == 'darwin' )
+	{
+		if (!w || w == null || BrowserWindow.getAllWindows().length === 0) {
+			w = makeWindow(renderer);
+		}
 	}
 });
 
@@ -163,4 +164,10 @@ ipcMain.on('selected', (ev, source) => {
 		
 		dismissLoading(ev.sender);
 	});
+});
+
+ipcMain.on('update-theme', () => {
+	logger.log('Theme asked');
+
+	updateTheme()
 });

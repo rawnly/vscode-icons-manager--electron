@@ -9,12 +9,25 @@ body {
     font-size: 18px;
     font-weight: normal;
 
-    color: #222;
-
     margin: 0;
     padding: 0;
 
+    overflow-x: hidden;
+
     background: white;
+    color: #1d1d1d;
+}
+
+html.theme-light,
+body.theme-light {
+    background: white;
+    color: #1d1d1d;
+}
+
+html.theme-dark,
+body.theme-dark {
+    color: white;
+    background: #1d1d1d;
 }
 
 
@@ -54,8 +67,14 @@ body {
     align-items: center;
 
     z-index: 999;
+}
 
+.container.overlay.theme-light {
     background: white;
+}
+
+.container.overlay.theme-dark {
+    background: #1d1d1d;
 }
 
 .container.overlay svg {
@@ -69,7 +88,6 @@ body {
 
 
 .flex-container {
-    background: white;
     padding-top: 0;
 
     display: flex;
@@ -77,6 +95,14 @@ body {
     align-items: flex-start;
     flex-wrap: wrap;
     flex-direction: row;
+}
+
+.flex-container .theme-light {
+    background: white;
+}
+
+.flex-container .theme-dark {
+    background: #1d1d1d;
 }
 
 .flex-container .item {
@@ -133,15 +159,24 @@ body {
     align-items: center;
 }
 
+.search-container.theme-light input {
+    color: #1d1d1d;
+}
+
+.search-container.theme-dark input {
+    color: #ffffff;
+}
+
 .search-container input {
     width: 80vw;
     max-width: 350px;
-
+    
     margin: 0 auto;
     padding: 10px 15px;
     font-size: 1em;
     border-radius: 20px;
     border: 1px solid #eee;
+    background: transparent;
 
 
     transition: all 200ms ease-in-out;
@@ -166,4 +201,24 @@ body {
     -webkit-user-select: none;
     -ms-overflow-style: scrollbar;
     -webkit-app-region:drag;
+}
+
+#app {
+    width: 100vh;
+    height: 100vw;
+}
+
+#spinner.theme-dark {
+    fill: #ffffff;
+}
+
+#spinner.theme-light {
+    fill: #1d1d1d;
+}
+
+.theme {
+    transition: 
+        background 100ms ease-in-out, 
+        color 100ms ease-in-out, 
+        border-color 100ms ease-in-out;
 }
