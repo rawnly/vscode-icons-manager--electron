@@ -9,20 +9,24 @@ This project was born from the necessity of a desktop app that helps you manage 
 
 
 # Run
-As we don't actually have a build phase you need to run this app via electron.
-
 #### ⚠️ This app currently works only on macOS
+Download the latest release [here](https://github.com/vscode-icons-desktop/releases/latest).
 
-- Clone this repo 
-- Install all dependencies via "npm" or "yarn"
-- Run via "npm start" or "yarn start"
 
 # Known issues
 - After download you need to `cmd + click` on the dock icon to update it.
 - If the icon has been downloaded in the past the loading screen and the notification doesn't appear on the screen. (NOTE: This has been temporally fixed by deleting it after download.)
 
 # Contribute
-Contributors are always welcome! To ensure that your PR will be merged please follow the code-style
+Contributors are always welcome!
+
+How can i contribute?
+
+- Clone this repo
+- Install dependecies via `yarn` or `npm`
+- Do your changes
+- Create a new PR and push your stuff
+
 
 ## TODO before release
 <br />
