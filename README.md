@@ -1,26 +1,27 @@
 # VSCode Icons Manager
-> Currently Work in Progress
-
-This project was born from the necessity of a desktop app that helps you manage **[@dhanishgajjar][dhanish]** custom [vscode icons][icons]
+> This app let's you manage vscode icons by [@dhanishgajjar][dhanish] easy with ease.
 
 <p align="center">
     <img src="https://user-images.githubusercontent.com/16429579/45490907-9fc88300-b768-11e8-9a4c-96c2e6576c83.png" alt="cover">
 </p>
 
 
-# Run
-#### ⚠️ This app currently works only on macOS
-Download the latest release [here](https://github.com/Rawnly/vscode-icons-desktop/releases/latest).
+# [Icons][icons]
+Right now all icons are taken from [@dhanishgajjar][dhanish] [vscode-icons][icons] repo.
 
+Please check it out and contribute if you can.
+
+# Installation
+The latest release is available for download [here](https://github.com/Rawnly/vscode-icons-desktop/releases/latest).
+Just download it and move the app to your Applications folder
 
 # Known issues
 - After download you need to `cmd + click` on the dock icon to update it.
 - If the icon has been downloaded in the past the loading screen and the notification doesn't appear on the screen. (NOTE: This has been temporally fixed by deleting it after download.)
 
-# Contribute
-Contributors are always welcome!
 
-How can i contribute?
+# How can i contribute?
+Contributors are always welcome!
 
 - Clone this repo
 - Install dependecies via `yarn` or `npm`
@@ -28,7 +29,7 @@ How can i contribute?
 - Create a new PR and push your stuff
 
 
-## TODO before release
+## TODO
 <br />
 <br />
 
@@ -66,7 +67,6 @@ How can i contribute?
 
 
 # Related
-
 - [vscode-icons][icons] is a project by **[@dhanishgajjar][dhanish]**
 
 <br />
