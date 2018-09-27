@@ -1,6 +1,8 @@
 # VSCode Icons Manager
 > This app let's you manage vscode icons by [@dhanishgajjar][dhanish] easy with ease.
 
+### Checkout the [native version](https://github.com/Rawnly/vscode-icons-manager)
+
 <p align="center">
     <img src="https://user-images.githubusercontent.com/16429579/45881568-cc554e00-bdab-11e8-91bb-ef597e8cadbc.png" alt="cover">
 </p>
