@@ -18,7 +18,7 @@ The latest release is available for download [here](https://github.com/Rawnly/vs
 Just download it and move the app to your Applications folder
 
 # Known issues
-- After download you need to `cmd + click` on the dock icon to update it.
+- After download you need to <kbd>⌘ Command</kbd> + `click` on the dock icon to update it.
 - If the icon has been downloaded in the past the loading screen and the notification doesn't appear on the screen. (NOTE: This has been temporally fixed by deleting it after download.)
 
 
@@ -61,7 +61,7 @@ Contributors are always welcome!
 <br />
 
 - [x] ~Implement build~
-- [ ] Automatization of icon update... Right now after the app changes the file you need to "cmd+click" on the dock icon or restart to update the icon in the dock.
+- [ ] Automatization of icon update... Right now after the app changes the file you need to <kbd>⌘ Command</kbd> + `click` on the dock icon or restart to update the icon in the dock.
 
 <br />
 <br />
