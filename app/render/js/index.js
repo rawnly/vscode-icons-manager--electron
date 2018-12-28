@@ -2,7 +2,9 @@
 
 require('electron-titlebar');
 
-const { ipcRenderer : ipc } = require('electron');
+const {
+    ipcRenderer: ipc
+} = require('electron');
 // const ipc = ipcRenderer;
 
 
@@ -16,7 +18,8 @@ const $vm = new Vue({
         loading: {
             error: false,
             message: 'Loading awesome icons...',
-            isLoading: true
+            isLoading: true,
+            detail: false
         },
         icons: {
             remote: [],
@@ -24,7 +27,7 @@ const $vm = new Vue({
             local: []
         }
     },
-    mounted: async function() {
+    mounted: async function () {
         ipc.send('update-theme');
 
         this.presentLoading('Loading awesome icons...');
@@ -38,7 +41,7 @@ const $vm = new Vue({
     },
     methods: {
         setIcon(url) {
-            if ( url )
+            if (url)
                 ipc.send('selected', url)
         },
         showError(error) {
@@ -57,6 +60,11 @@ const $vm = new Vue({
         async fetchIcons() {
             const response = await fetch('https://api.github.com/repositories/110824329/contents/linux')
             const data = await response.json();
+
+            if ((!data || !data.length) || data.message) {
+                this.loading.detail = data.message;
+                throw SyntaxError("Unable to fetch API");
+            }
 
             this.icons.remote = data.map((icon, index) => {
                 let filename = encodeURIComponent(icon.download_url.split('/').pop().replace('.png', '.icns'));
@@ -91,7 +99,8 @@ const $vm = new Vue({
             setTimeout(() => overlay.style.zIndex = 9999, 200);
         },
         dismissLoading() {
-            this.isLoading = false;
+            this.loading.detail = false
+            this.loading.isLoading = false;
             this.loading.message = 'Loading awesome icons...';
 
             let overlay = this.$refs.loadingContainer
@@ -100,7 +109,9 @@ const $vm = new Vue({
             setTimeout(() => overlay.style.zIndex = -1, 200);
         },
         notify(title, body, onClick) {
-            const notification = new Notification(title, { body });
+            const notification = new Notification(title, {
+                body
+            });
             notification.onclick = onClick;
         }
     }
@@ -122,8 +133,7 @@ ipc.on('present-loading', () => {
 ipc.on('theme changed', (e, data) => {
     console.log(e, data)
 
-    if ( data.dark == true )
-    {
+    if (data.dark == true) {
         document.querySelectorAll('.theme-light').forEach(el => {
             el.classList.toggle('theme-light')
             el.classList.toggle('theme-dark')

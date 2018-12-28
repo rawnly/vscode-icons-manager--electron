@@ -12,16 +12,15 @@
 </head>
 
 <body class="theme theme-light">
-    <!-- <div id="electron-titlebar" class="drag" style="position: absolute"></div> -->
-    <div id="electron-titlebar"></div>
     <div id="app">
         <div class="search-container theme theme-light">
             <input type="text" @keyup="search" v-model="query" id="search" placeholder="Search icons">
         </div>
 
         <div class="container overlay theme theme-light" ref="loadingContainer">
-            <svg v-if="loading.isLoading" version="1.1" id="loader-1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px"
-                y="0px" width="40px" height="40px" viewBox="0 0 50 50" style="enable-background:new 0 0 50 50;" xml:space="preserve">
+            <svg v-if="loading.isLoading" version="1.1" id="loader-1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                x="0px" y="0px" width="40px" height="40px" viewBox="0 0 50 50" style="enable-background:new 0 0 50 50;"
+                xml:space="preserve">
                 <path id="spinner" class="theme theme-light" d="M43.935,25.145c0-10.318-8.364-18.683-18.683-18.683c-10.318,0-18.683,8.365-18.683,18.683h4.068c0-8.071,6.543-14.615,14.615-14.615c8.072,0,14.615,6.543,14.615,14.615H43.935z">
                     <animateTransform attributeType="xml" attributeName="transform" type="rotate" from="0 25 25" to="360 25 25"
                         dur="0.6s" repeatCount="indefinite" />
@@ -29,6 +28,8 @@
             </svg>
 
             <h2> {{loading.message}} </h2>
+            <small v-if="loading.detail !== undefined">{{loading.detail}}</small>
+            <br />
             <button v-if="loading.isLoading === false" ref="refreshBtn" @click="fetchIcons"> Try Again </button>
         </div>
 
