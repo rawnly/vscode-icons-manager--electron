@@ -1,47 +1,44 @@
-const fs = require('fs');
+'use strict';
 
-const touch = require('touch');
-const Store = require('electron-store');
+var fs = require('fs');
 
-const settings = new Store();
+var touch = require('touch');
+var Store = require('electron-store');
 
-const logger = require('electron-timber');
-const electron = require('electron');
+var settings = new Store();
 
+var logger = require('electron-timber');
+var electron = require('electron');
 
 function presentLoading(window) {
-	if (window)
-		window.webContents.send('present-loading');
+	if (window) window.webContents.send('present-loading');
 }
 
 function dismissLoading(window) {
-	if (window)
-		window.webContents.send('dismiss-loading');
+	if (window) window.webContents.send('dismiss-loading');
 }
 
 module.exports.setIcon = function setIcon(iconPath, window) {
-	let iconFolder = settings.get('icon-folder');
-	let appLocation = settings.get('app-location');
-	
+	var iconFolder = settings.get('icon-folder');
+	var appLocation = settings.get('app-location');
 
 	// Remove the current icon
-	fs.unlink(iconFolder + 'Code.icns', error => {
+	fs.unlink(iconFolder + 'Code.icns', function (error) {
 		// eslint-disable-next-line
 		if (error) logger.error(error);
 
 		// Copy the new icon
-		fs.copyFile(iconPath, iconFolder + 'Code.icns', error => {
+		fs.copyFile(iconPath, iconFolder + 'Code.icns', function (error) {
 			// eslint-disable-next-line
 			if (error) return logger.error(error);
-			
-			fs.unlink(iconPath, error => {
+
+			fs.unlink(iconPath, function (error) {
 				// eslint-disable-next-line
 				if (error) return logger.error(error);
 
-				
 				// Update the finder
 				// eslint-disable-next-line
-				touch(appLocation, err => {
+				touch(appLocation, function (err) {
 					if (err) logger.error(err);
 				});
 
@@ -54,7 +51,9 @@ module.exports.setIcon = function setIcon(iconPath, window) {
 };
 
 module.exports.getIconsFrom = function getIconsFrom(pth) {
-	return fs.readdirSync(pth).filter(item => item.includes('.icns'));
+	return fs.readdirSync(pth).filter(function (item) {
+		return item.includes('.icns');
+	});
 };
 
 module.exports.presentLoading = presentLoading;

@@ -1,5 +1,12 @@
 node_modules
+
 .DS_Store
+.vscode
+.idea
+
 *.no_git
+
 icons
 dist
+
+app

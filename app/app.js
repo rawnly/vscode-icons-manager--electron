@@ -1,42 +1,39 @@
-/**
- * Copyright Federico Vitale © 2018
- * 
- * Code review is appreciated :)
- * 
- */
+'use strict';
 
-const path = require('path');
-const fs = require('fs');
+var _path = require('path');
 
-const {
-	join
-} = path;
-const {
-	app,
-	BrowserWindow,
-	ipcMain,
-	dialog,
-	systemPreferences
-} = require('electron');
-const {
-	download
-} = require('electron-dl');
+var _path2 = _interopRequireDefault(_path);
 
-const Storage = require('electron-store');
-const settings = new Storage();
+var _fs = require('fs');
 
-const {
-	setIcon,
-	presentLoading,
-	dismissLoading
-} = require('./libs/utils');
+var _fs2 = _interopRequireDefault(_fs);
 
-const logger = require('electron-timber');
+var _electron = require('electron');
 
-let w;
+var _electronDl = require('electron-dl');
 
+var _electronStore = require('electron-store');
 
-app.setName('VSCode Icons Manager');
+var _electronStore2 = _interopRequireDefault(_electronStore);
+
+var _utils = require('./libs/utils');
+
+var _electronTimber = require('electron-timber');
+
+var _electronTimber2 = _interopRequireDefault(_electronTimber);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var settings = new _electronStore2.default(); /**
+                                               * Copyright Federico Vitale © 2018
+                                               * 
+                                               * Code review is appreciated :)
+                                               * 
+                                               */
+
+var w = void 0;
+
+_electron.app.setName('VSCode Icons Manager');
 
 /**
  * 
@@ -47,8 +44,10 @@ app.setName('VSCode Icons Manager');
  * @returns {Object} BrowserWindow object
  * 
  */
-function makeWindow(path, windowName = 'main') {
-	let win = new BrowserWindow({
+function makeWindow(path) {
+	var windowName = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'main';
+
+	var win = new _electron.BrowserWindow({
 		width: 800,
 		height: 800,
 		center: true,
@@ -59,41 +58,43 @@ function makeWindow(path, windowName = 'main') {
 		maximizable: false,
 		title: windowName,
 		titleBarStyle: 'hiddenInset',
-		icon: join(__dirname, '..', 'assets', 'icon', '64x64.png')
+		icon: (0, _path.join)(__dirname, '..', 'assets', 'icon', '64x64.png')
 	});
 
 	win.loadURL('file://' + __dirname + '/' + path);
 
-	win.once('ready-to-show', () => win.show());
-	win.on('closed', () => win = null);
-
+	win.once('ready-to-show', function () {
+		return win.show();
+	});
+	win.on('closed', function () {
+		return win = null;
+	});
 
 	require('./libs/Menu');
 
 	return win;
 }
 
-
 // Renderer files folder
-let renderer = 'render/index.html';
+var renderer = 'render/index.html';
 
-const updateTheme = () => {
-	logger.log('Changing theme to', systemPreferences.isDarkMode() ? 'dark' : 'bright');
+var updateTheme = function updateTheme() {
+	_electronTimber2.default.log('Changing theme to', _electron.systemPreferences.isDarkMode() ? 'dark' : 'bright');
 	if (w) w.webContents.send('theme changed', {
-		dark: systemPreferences.isDarkMode()
+		dark: _electron.systemPreferences.isDarkMode()
 	});
 };
 
-systemPreferences.subscribeNotification('AppleInterfaceThemeChangedNotification', updateTheme);
+_electron.systemPreferences.subscribeNotification('AppleInterfaceThemeChangedNotification', updateTheme);
 
 // Once app is ready
-app.once('ready', () => {
+_electron.app.once('ready', function () {
 	w = makeWindow(renderer);
 	updateTheme();
 
 	if (process.platform != 'darwin') {
-		dialog.showErrorBox('Unsupported platform!', 'We are sorry but right now that application runs only on macOS systems.');
-		return app.quit();
+		_electron.dialog.showErrorBox('Unsupported platform!', 'We are sorry but right now that application runs only on macOS systems.');
+		return _electron.app.quit();
 	}
 
 	// Check for vscode installation
@@ -101,13 +102,13 @@ app.once('ready', () => {
 	if (!settings.has('app-location')) settings.set('app-location', '/Applications/Visual Studio Code.app');
 
 	// If the app does not exists in /Applications: manually locate it. 
-	if (fs.existsSync(settings.get('app-location')) == false) {
-		dialog.showMessageBox(w, {
+	if (_fs2.default.existsSync(settings.get('app-location')) == false) {
+		_electron.dialog.showMessageBox(w, {
 			title: 'Warning!',
 			message: '"Visual Studio Code" not found in your "/Applications" folder.',
 			buttons: ['Locate']
-		}, () => {
-			dialog.showOpenDialog(w, {
+		}, function () {
+			_electron.dialog.showOpenDialog(w, {
 				title: 'Open App',
 				message: 'Show me where is located your VSCode App',
 				properties: ['openFile'],
@@ -117,13 +118,13 @@ app.once('ready', () => {
 					name: 'All Files',
 					extensions: ['*']
 				}]
-			}, newPath => {
+			}, function (newPath) {
 
 				if (!newPath || !newPath.length) {
-					return app.quit();
+					return _electron.app.quit();
 				}
 
-				let iconFolder = path.join(newPath[0], 'Contents', 'Resources');
+				var iconFolder = _path2.default.join(newPath[0], 'Contents', 'Resources');
 
 				// Do something with settings
 				settings.set('app-location', newPath[0]);
@@ -131,57 +132,57 @@ app.once('ready', () => {
 			});
 		});
 	}
-
 });
 
 // If all windows are closed then close the app if not on macOS
-app.on('window-all-closed', () => {
+_electron.app.on('window-all-closed', function () {
 	w = null;
-	if (process.platform !== 'darwin') return app.quit();
+	if (process.platform !== 'darwin') return _electron.app.quit();
 });
 
 // on macOS create a new window on app click (only if no windows are avaialble)
-app.on('activate', () => {
+_electron.app.on('activate', function () {
 	if (process.platform == 'darwin') {
-		if (!w || w == null || BrowserWindow.getAllWindows().length === 0) {
+		if (!w || w == null || _electron.BrowserWindow.getAllWindows().length === 0) {
 			w = makeWindow(renderer);
 		}
 	}
 });
 
-
 // Focus the main window
-ipcMain.on('keep-focus', () => w.focus());
+_electron.ipcMain.on('keep-focus', function () {
+	return w.focus();
+});
 
 // On icon click change the icon.
-ipcMain.on('selected', (ev, source) => {
-	let filename = source.split('/').pop();
+_electron.ipcMain.on('selected', function (ev, source) {
+	var filename = source.split('/').pop();
 
-	presentLoading(ev.sender);
+	(0, _utils.presentLoading)(ev.sender);
 
 	// If the icon exists prevent download
-	if (fs.existsSync(path.join(__dirname, '..', 'icons', filename)) === true) {
-		logger.log('Icon exists!');
-		return setIcon(path.join(__dirname, '..', 'icons', filename), ev.sender);
+	if (_fs2.default.existsSync(_path2.default.join(__dirname, '..', 'icons', filename)) === true) {
+		_electronTimber2.default.log('Icon exists!');
+		return (0, _utils.setIcon)(_path2.default.join(__dirname, '..', 'icons', filename), ev.sender);
 	}
 
-	logger.log('Starting download');
+	_electronTimber2.default.log('Starting download');
 
 	// Download the icon from git repo
-	download(BrowserWindow.getFocusedWindow(), source, {
-		directory: path.join(__dirname, '..', 'icons')
-	}).then(dl => {
-		let p = dl.getSavePath();
-		setIcon(p, ev.sender);
-	}).catch((error) => {
-		logger.error(error);
+	(0, _electronDl.download)(_electron.BrowserWindow.getFocusedWindow(), source, {
+		directory: _path2.default.join(__dirname, '..', 'icons')
+	}).then(function (dl) {
+		var p = dl.getSavePath();
+		(0, _utils.setIcon)(p, ev.sender);
+	}).catch(function (error) {
+		_electronTimber2.default.error(error);
 
-		dismissLoading(ev.sender);
+		(0, _utils.dismissLoading)(ev.sender);
 	});
 });
 
-ipcMain.on('update-theme', () => {
-	logger.log('Theme asked');
+_electron.ipcMain.on('update-theme', function () {
+	_electronTimber2.default.log('Theme asked');
 
 	updateTheme();
 });

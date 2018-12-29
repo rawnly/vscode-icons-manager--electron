@@ -1,154 +1,242 @@
-/* eslint-disable */
+"use strict";
 
-require('electron-titlebar');
+var _regenerator = require("babel-runtime/regenerator");
 
-const {
-    ipcRenderer: ipc
-} = require('electron');
-// const ipc = ipcRenderer;
+var _regenerator2 = _interopRequireDefault(_regenerator);
 
+var _asyncToGenerator2 = require("babel-runtime/helpers/asyncToGenerator");
 
-const capitalizeWord = word => word.charAt(0).toUpperCase() + word.substr(1, word.length);
-const capitalizeEachWord = sentence => sentence.split(' ').map(word => capitalizeWord(word)).join(' ');
+var _asyncToGenerator3 = _interopRequireDefault(_asyncToGenerator2);
 
-const $vm = new Vue({
-    el: '#app',
-    data: {
-        query: null,
-        loading: {
-            error: false,
-            message: 'Loading awesome icons...',
-            isLoading: true,
-            detail: false
-        },
-        icons: {
-            remote: [],
-            filtered: [],
-            local: []
-        }
+var _electron = require("electron");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+require("electron-titlebar");
+
+var capitalizeWord = function capitalizeWord(word) {
+  return word.charAt(0).toUpperCase() + word.substr(1, word.length);
+};
+var capitalizeEachWord = function capitalizeEachWord(sentence) {
+  return sentence.split(" ").map(function (word) {
+    return capitalizeWord(word);
+  }).join(" ");
+};
+
+var $vm = new Vue({
+  el: "#app",
+  data: {
+    query: null,
+    loading: {
+      error: false,
+      message: "Loading awesome icons...",
+      isLoading: true,
+      detail: false
     },
-    mounted: async function () {
-        ipc.send('update-theme');
+    icons: {
+      remote: [],
+      filtered: [],
+      local: []
+    }
+  },
+  mounted: function () {
+    var _ref = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee() {
+      return _regenerator2.default.wrap(function _callee$(_context) {
+        while (1) {
+          switch (_context.prev = _context.next) {
+            case 0:
+              _electron.ipcRenderer.send("update-theme");
 
-        this.presentLoading('Loading awesome icons...');
+              this.presentLoading("Loading awesome icons...");
 
-        try {
-            await this.fetchIcons();
-            this.dismissLoading();
-        } catch (error) {
-            this.showError(error);
+              _context.prev = 2;
+              _context.next = 5;
+              return this.fetchIcons();
+
+            case 5:
+              this.dismissLoading();
+              _context.next = 11;
+              break;
+
+            case 8:
+              _context.prev = 8;
+              _context.t0 = _context["catch"](2);
+
+              this.showError(_context.t0);
+
+            case 11:
+            case "end":
+              return _context.stop();
+          }
         }
+      }, _callee, this, [[2, 8]]);
+    }));
+
+    function mounted() {
+      return _ref.apply(this, arguments);
+    }
+
+    return mounted;
+  }(),
+  methods: {
+    setIcon: function setIcon(url) {
+      if (url) _electron.ipcRenderer.send("selected", url);
     },
-    methods: {
-        setIcon(url) {
-            if (url)
-                ipc.send('selected', url)
-        },
-        showError(error) {
-            this.loading.error = true;
-            this.loading.isLoading = false;
-            this.loading.message = error.message;
+    showError: function showError(error) {
+      this.loading.error = true;
+      this.loading.isLoading = false;
+      this.loading.message = error.message;
 
-            console.log(error.message)
-        },
-        search() {
-            this.icons.filtered = this.icons.remote.filter(item => {
-                const re = new RegExp(`${this.query.toLowerCase()}`, 'g')
-                return re.test(item.title.toLowerCase())
-            })
-        },
-        async fetchIcons() {
-            const response = await fetch('https://api.github.com/repositories/110824329/contents/linux')
-            const data = await response.json();
+      console.log(error.message);
+    },
+    search: function search() {
+      var _this = this;
 
-            if ((!data || !data.length) || data.message) {
-                this.loading.detail = data.message;
-                throw new Error(`[${response.status}] - Unable to fetch API`)
-            }
+      this.icons.filtered = this.icons.remote.filter(function (item) {
+        var re = new RegExp("" + _this.query.toLowerCase(), "g");
+        return re.test(item.title.toLowerCase());
+      });
+    },
+    fetchIcons: function fetchIcons() {
+      var _this2 = this;
 
-            this.icons.remote = data.map((icon, index) => {
-                let filename = encodeURIComponent(icon.download_url.split('/').pop().replace('.png', '.icns'));
-                let url = icon.download_url.split('/');
+      return (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee2() {
+        var response, data;
+        return _regenerator2.default.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                _context2.next = 2;
+                return fetch("https://api.github.com/repositories/110824329/contents/linux");
 
-                url.splice(url.length - 2, 2);
+              case 2:
+                response = _context2.sent;
+                _context2.next = 5;
+                return response.json();
 
-                url = url.join('/');
+              case 5:
+                data = _context2.sent;
 
-                url += `/macOS/${filename}`;
+                if (!(!data || !data.length || data.message)) {
+                  _context2.next = 9;
+                  break;
+                }
 
-                return {
+                _this2.loading.detail = data.message;
+                throw new Error("[" + response.status + "] - Unable to fetch API");
+
+              case 9:
+
+                _this2.icons.remote = data.map(function (icon, index) {
+                  var filename = encodeURIComponent(icon.download_url.split("/").pop().replace(".png", ".icns"));
+                  var url = icon.download_url.split("/");
+
+                  url.splice(url.length - 2, 2);
+
+                  url = url.join("/");
+
+                  url += "/macOS/" + filename;
+
+                  return {
                     name: icon.name,
-                    title: capitalizeEachWord(icon.name.split('.')[0].replace(/-|_/g, ' ')),
+                    title: capitalizeEachWord(icon.name.split(".")[0].replace(/-|_/g, " ")),
                     image: icon.download_url,
                     download: url
-                }
-            });
+                  };
+                });
 
-            this.icons.filtered = this.icons.remote;
+                _this2.icons.filtered = _this2.icons.remote;
 
-            this.dismissLoading();
-        },
-        async tryAgain() {
-            this.presentLoading("Loading...");
-            this.fetchIcons()
-        },
-        presentLoading(message) {
-            this.loading.isLoading = true;
-            this.loading.detail = false;
+                _this2.dismissLoading();
 
-            if (message) this.loading.message = message;
+              case 12:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2, _this2);
+      }))();
+    },
+    tryAgain: function tryAgain() {
+      var _this3 = this;
 
-            let overlay = this.$refs.loadingContainer
+      return (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee3() {
+        return _regenerator2.default.wrap(function _callee3$(_context3) {
+          while (1) {
+            switch (_context3.prev = _context3.next) {
+              case 0:
+                _this3.presentLoading("Loading...");
+                _this3.fetchIcons();
 
-            overlay.style.opacity = 1;
-            setTimeout(() => overlay.style.zIndex = 9999, 200);
-        },
-        dismissLoading() {
-            this.loading.detail = false
-            this.loading.isLoading = false;
-            this.loading.message = 'Loading awesome icons...';
+              case 2:
+              case "end":
+                return _context3.stop();
+            }
+          }
+        }, _callee3, _this3);
+      }))();
+    },
+    presentLoading: function presentLoading(message) {
+      this.loading.isLoading = true;
+      this.loading.detail = false;
 
-            let overlay = this.$refs.loadingContainer
+      if (message) this.loading.message = message;
 
-            overlay.style.opacity = 0;
-            setTimeout(() => overlay.style.zIndex = -1, 200);
-        },
-        notify(title, body, onClick) {
-            const notification = new Notification(title, {
-                body
-            });
-            notification.onclick = onClick;
-        }
+      var overlay = this.$refs.loadingContainer;
+
+      overlay.style.opacity = 1;
+      setTimeout(function () {
+        return overlay.style.zIndex = 9999;
+      }, 200);
+    },
+    dismissLoading: function dismissLoading() {
+      this.loading.detail = false;
+      this.loading.isLoading = false;
+      this.loading.message = "Loading awesome icons...";
+
+      var overlay = this.$refs.loadingContainer;
+
+      overlay.style.opacity = 0;
+      setTimeout(function () {
+        return overlay.style.zIndex = -1;
+      }, 200);
+    },
+    notify: function notify(title, body, onClick) {
+      var notification = new Notification(title, {
+        body: body
+      });
+      notification.onclick = onClick;
     }
-})
-
+  }
+});
 
 // IPC
-ipc.on('notification', () => {
-    $vm.notify('Icon updated!', 'Your VSCode icons has been updated!', () => ipc.send('keep-focus'));
+_electron.ipcRenderer.on("notification", function () {
+  $vm.notify("Icon updated!", "Your VSCode icons has been updated!", function () {
+    return _electron.ipcRenderer.send("keep-focus");
+  });
 });
 
-ipc.on('dismiss-loading', $vm.dismissLoading);
+_electron.ipcRenderer.on("dismiss-loading", $vm.dismissLoading);
 
-ipc.on('present-loading', () => {
-    $vm.presentLoading('Loading...');
+_electron.ipcRenderer.on("present-loading", function () {
+  $vm.presentLoading("Loading...");
 });
 
+_electron.ipcRenderer.on("theme changed", function (e, data) {
+  console.log(e, data);
 
-ipc.on('theme changed', (e, data) => {
-    console.log(e, data)
+  if (data.dark == true) {
+    document.querySelectorAll(".theme-light").forEach(function (el) {
+      el.classList.toggle("theme-light");
+      el.classList.toggle("theme-dark");
+    });
 
-    if (data.dark == true) {
-        document.querySelectorAll('.theme-light').forEach(el => {
-            el.classList.toggle('theme-light')
-            el.classList.toggle('theme-dark')
-        })
+    return;
+  }
 
-        return;
-    }
-
-    document.querySelectorAll('.theme-dark').forEach(el => {
-        el.classList.toggle('theme-light')
-        el.classList.toggle('theme-dark')
-    })
-})
+  document.querySelectorAll(".theme-dark").forEach(function (el) {
+    el.classList.toggle("theme-light");
+    el.classList.toggle("theme-dark");
+  });
+});
