@@ -16,7 +16,7 @@
       "category": "public.app-category.utilities",
       "target": "dmg"
     }
-  }, 
+  },
   "scripts": {
     "clean": "rm -rf dist",
     "start": "electron .",

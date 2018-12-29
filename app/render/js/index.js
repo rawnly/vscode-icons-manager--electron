@@ -63,7 +63,7 @@ const $vm = new Vue({
 
             if ((!data || !data.length) || data.message) {
                 this.loading.detail = data.message;
-                throw SyntaxError("Unable to fetch API");
+                throw new Error(`[${response.status}] - Unable to fetch API`)
             }
 
             this.icons.remote = data.map((icon, index) => {
@@ -88,8 +88,13 @@ const $vm = new Vue({
 
             this.dismissLoading();
         },
+        async tryAgain() {
+            this.presentLoading("Loading...");
+            this.fetchIcons()
+        },
         presentLoading(message) {
-            this.isLoading = true;
+            this.loading.isLoading = true;
+            this.loading.detail = false;
 
             if (message) this.loading.message = message;
 

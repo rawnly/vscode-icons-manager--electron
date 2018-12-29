@@ -8,14 +8,28 @@
 const path = require('path');
 const fs = require('fs');
 
-const { join } = path;
-const { app, BrowserWindow, ipcMain, dialog, systemPreferences } = require('electron');
-const { download } = require('electron-dl');
+const {
+	join
+} = path;
+const {
+	app,
+	BrowserWindow,
+	ipcMain,
+	dialog,
+	systemPreferences
+} = require('electron');
+const {
+	download
+} = require('electron-dl');
 
 const Storage = require('electron-store');
 const settings = new Storage();
 
-const { setIcon, presentLoading, dismissLoading } = require('./libs/utils');
+const {
+	setIcon,
+	presentLoading,
+	dismissLoading
+} = require('./libs/utils');
 
 const logger = require('electron-timber');
 
@@ -33,8 +47,7 @@ app.setName('VSCode Icons Manager');
  * @returns {Object} BrowserWindow object
  * 
  */
-function makeWindow(path, windowName = 'main')
-{
+function makeWindow(path, windowName = 'main') {
 	let win = new BrowserWindow({
 		width: 800,
 		height: 800,
@@ -55,7 +68,7 @@ function makeWindow(path, windowName = 'main')
 	win.on('closed', () => win = null);
 
 
-	require('./libs/Menu');	
+	require('./libs/Menu');
 
 	return win;
 }
@@ -64,9 +77,11 @@ function makeWindow(path, windowName = 'main')
 // Renderer files folder
 let renderer = 'render/index.html';
 
-const updateTheme = () =>  {
+const updateTheme = () => {
 	logger.log('Changing theme to', systemPreferences.isDarkMode() ? 'dark' : 'bright');
-	if ( w ) w.webContents.send('theme changed', { dark: systemPreferences.isDarkMode() });
+	if (w) w.webContents.send('theme changed', {
+		dark: systemPreferences.isDarkMode()
+	});
 };
 
 systemPreferences.subscribeNotification('AppleInterfaceThemeChangedNotification', updateTheme);
@@ -76,19 +91,17 @@ app.once('ready', () => {
 	w = makeWindow(renderer);
 	updateTheme();
 
-	if ( process.platform != 'darwin' )
-	{
+	if (process.platform != 'darwin') {
 		dialog.showErrorBox('Unsupported platform!', 'We are sorry but right now that application runs only on macOS systems.');
 		return app.quit();
 	}
 
 	// Check for vscode installation
-	if (!settings.has('icon-folder'))  settings.set('icon-folder', '/Applications/Visual\ Studio\ Code.app/Contents/Resources/');
-	if (!settings.has('app-location')) settings.set('app-location', '/Applications/Visual\ Studio\ Code.app');
+	if (!settings.has('icon-folder')) settings.set('icon-folder', '/Applications/Visual Studio Code.app/Contents/Resources/');
+	if (!settings.has('app-location')) settings.set('app-location', '/Applications/Visual Studio Code.app');
 
 	// If the app does not exists in /Applications: manually locate it. 
-	if (fs.existsSync(settings.get('app-location')) == false )
-	{
+	if (fs.existsSync(settings.get('app-location')) == false) {
 		dialog.showMessageBox(w, {
 			title: 'Warning!',
 			message: '"Visual Studio Code" not found in your "/Applications" folder.',
@@ -100,7 +113,10 @@ app.once('ready', () => {
 				properties: ['openFile'],
 				buttonLabel: 'That\'s it!',
 				defaultPath: '/Applications',
-				filters: [{ name: 'All Files', extensions: ['*'] }]
+				filters: [{
+					name: 'All Files',
+					extensions: ['*']
+				}]
 			}, newPath => {
 
 				if (!newPath || !newPath.length) {
@@ -115,19 +131,18 @@ app.once('ready', () => {
 			});
 		});
 	}
-	
+
 });
 
 // If all windows are closed then close the app if not on macOS
 app.on('window-all-closed', () => {
 	w = null;
-	if (process.platform !== 'darwin' ) return app.quit();
+	if (process.platform !== 'darwin') return app.quit();
 });
 
 // on macOS create a new window on app click (only if no windows are avaialble)
 app.on('activate', () => {
-	if ( process.platform == 'darwin' )
-	{
+	if (process.platform == 'darwin') {
 		if (!w || w == null || BrowserWindow.getAllWindows().length === 0) {
 			w = makeWindow(renderer);
 		}
@@ -145,14 +160,13 @@ ipcMain.on('selected', (ev, source) => {
 	presentLoading(ev.sender);
 
 	// If the icon exists prevent download
-	if ( fs.existsSync( path.join(__dirname, '..', 'icons', filename) ) === true  )
-	{
+	if (fs.existsSync(path.join(__dirname, '..', 'icons', filename)) === true) {
 		logger.log('Icon exists!');
 		return setIcon(path.join(__dirname, '..', 'icons', filename), ev.sender);
 	}
 
 	logger.log('Starting download');
-		
+
 	// Download the icon from git repo
 	download(BrowserWindow.getFocusedWindow(), source, {
 		directory: path.join(__dirname, '..', 'icons')
@@ -161,7 +175,7 @@ ipcMain.on('selected', (ev, source) => {
 		setIcon(p, ev.sender);
 	}).catch((error) => {
 		logger.error(error);
-		
+
 		dismissLoading(ev.sender);
 	});
 });
@@ -169,5 +183,5 @@ ipcMain.on('selected', (ev, source) => {
 ipcMain.on('update-theme', () => {
 	logger.log('Theme asked');
 
-	updateTheme()
+	updateTheme();
 });

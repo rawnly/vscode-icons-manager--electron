@@ -8,6 +8,7 @@
 
     <title> VSCode Icons </title>
 
+    <link rel="stylesheet" href="css/buttons.css">
     <link rel="stylesheet" href="css/master.css">
 </head>
 
@@ -30,7 +31,8 @@
             <h2> {{loading.message}} </h2>
             <small v-if="loading.detail !== undefined">{{loading.detail}}</small>
             <br />
-            <button v-if="loading.isLoading === false" ref="refreshBtn" @click="fetchIcons"> Try Again </button>
+            <button v-if="loading.isLoading === false" ref="refreshBtn" @click="tryAgain" class="blue"> Try Again
+            </button>
         </div>
 
         <div class="flex-container container theme theme-light" ref="icons">
